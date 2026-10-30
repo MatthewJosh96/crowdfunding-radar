@@ -1,1 +1,95 @@
-# Crowdfunding Radar
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data: https://*.kickstarter.com https://ksr-ugc.imgix.net https://*.ksr-ugc.com https://*.kicktraq.com https://*.indiegogo.com https://*.iggcdn.com; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
+<title>Radar crowdfundingu</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Radar crowdfundingu</h1>
+    <p class="updated" id="updated"></p>
+  </div>
+</header>
+
+<form class="filters" id="filters" autocomplete="off" onsubmit="return false">
+  <div class="wrap">
+    <div class="row main-row">
+      <input type="search" id="q" placeholder="Szukaj..." aria-label="Szukaj" enterkeyhint="search">
+      <span class="count" id="count" role="status" aria-live="polite"></span>
+    </div>
+
+    <details id="more">
+      <summary>Filtry</summary>
+      <div class="grid">
+        <label>Platforma
+          <select id="platform">
+            <option value="">Wszystkie</option>
+            <option value="kickstarter">Kickstarter</option>
+            <option value="indiegogo">Indiegogo</option>
+          </select>
+        </label>
+
+        <label>Faza
+          <select id="phase">
+            <option value="">Wszystkie</option>
+            <option value="live">Trwa zbiórka</option>
+            <option value="late_pledge">Late pledge</option>
+          </select>
+        </label>
+
+        <label>Sortuj
+          <select id="sort">
+            <option value="score">Ocena</option>
+            <option value="price">Cena rosnąco</option>
+            <option value="funding">Finansowanie %</option>
+            <option value="backers">Wspierający</option>
+            <option value="newest">Najnowsze</option>
+            <option value="ending">Kończące się</option>
+          </select>
+        </label>
+
+        <div class="field"><span class="lbl">Cena (USD): <output id="priceOut"></output></span>
+          <input type="range" id="price" min="0" max="1000" step="10" value="1000" aria-label="Cena maksymalna">
+          <span class="check"><input type="checkbox" id="pnone" checked><label for="pnone">Cena nieznana</label></span>
+        </div>
+
+        <div class="field"><span class="lbl">Finansowanie: <output id="fundOut"></output></span>
+          <span class="dual">
+            <input type="range" id="fmin" min="0" max="1000" step="10" value="0" aria-label="Finansowanie od">
+            <input type="range" id="fmax" min="0" max="1000" step="10" value="1000" aria-label="Finansowanie do">
+          </span>
+        </div>
+
+        <div class="toggles">
+          <span class="check"><input type="checkbox" id="ending"><label for="ending">Kończące się (≤48 h)</label></span>
+          <span class="check"><input type="checkbox" id="favOnly"><label for="favOnly">Ulubione</label></span>
+          <span class="check"><input type="checkbox" id="showHidden"><label for="showHidden">Ukryte</label></span>
+        </div>
+      </div>
+
+      <fieldset class="cats">
+        <legend>Kategoria</legend>
+        <div id="cats" class="chips"></div>
+      </fieldset>
+
+      <button type="button" id="reset" class="reset">Resetuj filtry</button>
+    </details>
+  </div>
+</form>
+
+<main class="wrap">
+  <p id="status" class="status" role="status">Ładowanie…</p>
+  <div id="grid" class="cards"></div>
+  <div class="more-wrap"><button type="button" id="loadMore" class="load-more" hidden>Załaduj więcej</button></div>
+</main>
+
+<script src="lib.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
